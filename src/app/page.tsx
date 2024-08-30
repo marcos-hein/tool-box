@@ -6,16 +6,17 @@ import JSZip from "jszip";
 import { useState, useCallback } from "react";
 import { pdfjs, Page, Document } from "react-pdf";
 
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [numPages, setNumPages] = useState<number | null>(null);
   const [imageUrlArray, setImageUrlArray] = useState<{ index: number, url: string }[]>([]);
   const [selectedPDFFile, setSelectedPDFFile] = useState<File | undefined>(undefined);
 
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url,
-  ).toString();
 
   const handleFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
